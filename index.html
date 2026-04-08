@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轟Z子 | TODOROKI ZETSUKO</title>
+  <meta name="description" content="轟Z子（TODOROKI ZETSUKO）オフィシャルサイト。東京藝術大学大学院在籍。SAKA-SAMA / 惑星通信社メンバー。">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap');
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --color-bg: #0a0a0a;
+      --color-text: #e8e8e8;
+      --color-accent: #c0c0c0;
+      --color-muted: #666;
+      --color-border: #222;
+      --font-main: 'Noto Sans JP', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-weight: 300;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    nav .logo {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul a {
+      color: var(--color-muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    nav ul a:hover {
+      color: var(--color-text);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero .name-en {
+      font-size: clamp(0.75rem, 1.5vw, 1rem);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 2rem;
+    }
+
+    .hero .tagline {
+      font-size: clamp(0.85rem, 1.2vw, 1rem);
+      color: var(--color-accent);
+      max-width: 600px;
+      line-height: 2;
+    }
+
+    /* Section */
+    section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 3rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    /* Profile */
+    .profile-text {
+      font-size: 0.95rem;
+      line-height: 2.2;
+      margin-bottom: 2.5rem;
+    }
+
+    .profile-detail {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 0.8rem 2rem;
+      font-size: 0.85rem;
+    }
+
+    .profile-detail dt {
+      color: var(--color-muted);
+      font-weight: 400;
+    }
+
+    .profile-detail dd {
+      font-weight: 300;
+    }
+
+    /* Exhibition */
+    .exhibition-list {
+      list-style: none;
+    }
+
+    .exhibition-list li {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--color-border);
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      align-items: baseline;
+    }
+
+    .exhibition-list .year {
+      font-size: 0.85rem;
+      color: var(--color-muted);
+      font-weight: 400;
+    }
+
+    .exhibition-list .title {
+      font-size: 0.95rem;
+    }
+
+    .exhibition-list .venue {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      margin-top: 0.3rem;
+    }
+
+    /* Links */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .link-card {
+      display: block;
+      padding: 1.5rem;
+      border: 1px solid var(--color-border);
+      text-decoration: none;
+      color: var(--color-text);
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .link-card:hover {
+      border-color: var(--color-accent);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .link-card .link-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .link-card .link-name {
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+
+    /* Contact */
+    #contact p {
+      font-size: 0.9rem;
+      color: var(--color-accent);
+    }
+
+    #contact a {
+      color: var(--color-text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--color-border);
+      transition: border-color 0.3s;
+    }
+
+    #contact a:hover {
+      border-color: var(--color-text);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      font-size: 0.7rem;
+      color: var(--color-muted);
+      letter-spacing: 0.1em;
+      border-top: 1px solid var(--color-border);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      nav {
+        padding: 1rem 1.5rem;
+      }
+
+      nav ul {
+        gap: 1rem;
+      }
+
+      .profile-detail {
+        grid-template-columns: 1fr;
+        gap: 0.2rem;
+      }
+
+      .profile-detail dt {
+        margin-top: 0.8rem;
+      }
+
+      .exhibition-list li {
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">轟Z子</div>
+    <ul>
+      <li><a href="#profile">Profile</a></li>
+      <li><a href="#exhibition">Exhibition</a></li>
+      <li><a href="#links">Links</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <h1>轟Z子</h1>
+    <p class="name-en">Todoroki Zetsuko</p>
+    <p class="tagline">
+      アイドル・ノイズ・インタラクティブ。<br>
+      従来のアイドル像を拡張し、新たなフィールドと接続する。
+    </p>
+  </section>
+
+  <section id="profile">
+    <h2 class="section-title">Profile</h2>
+    <p class="profile-text">
+      東京藝術大学大学院映像研究科在籍。アイドルグループ SAKA-SAMA、惑星通信社のメンバーとして活動するほか、Maxを用いたノイズライブやインタラクティブな音楽表現を行う。従来のアイドル像を拡張し、新たなフィールドと接続する独自の表現を展開している。
+    </p>
+    <dl class="profile-detail">
+      <dt>所属</dt>
+      <dd>SAKA-SAMA / 惑星通信社</dd>
+      <dt>学歴</dt>
+      <dd>武蔵野美術大学 造形構想学部 映像学科 卒業（2024）</dd>
+      <dt></dt>
+      <dd>東京藝術大学大学院 映像研究科 入学（2024）</dd>
+    </dl>
+  </section>
+
+  <section id="exhibition">
+    <h2 class="section-title">Exhibition</h2>
+    <ul class="exhibition-list">
+      <li>
+        <span class="year">2025</span>
+        <div>
+          <div class="title">NEW PLATFORM -Alternative ASIA-</div>
+          <div class="venue">横浜</div>
+        </div>
+      </li>
+      <li>
+        <span class="year">2025</span>
+        <div>
+          <div class="title">アイドルと芸術8</div>
+          <div class="venue">mograg gallery</div>
+        </div>
+      </li>
+      <li>
+        <span class="year">2024</span>
+        <div>
+          <div class="title">アイドルと芸術7</div>
+          <div class="venue">mograg gallery</div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section id="links">
+    <h2 class="section-title">Links</h2>
+    <div class="links-grid">
+      <a class="link-card" href="https://x.com/ZetsukoJP_tur" target="_blank" rel="noopener">
+        <div class="link-label">X (Twitter)</div>
+        <div class="link-name">@ZetsukoJP_tur</div>
+      </a>
+      <a class="link-card" href="https://www.instagram.com/ZetsukoJP_tur" target="_blank" rel="noopener">
+        <div class="link-label">Instagram</div>
+        <div class="link-name">@ZetsukoJP_tur</div>
+      </a>
+      <a class="link-card" href="https://www.tiktok.com/@ZetsukoJP_tur" target="_blank" rel="noopener">
+        <div class="link-label">TikTok</div>
+        <div class="link-name">@ZetsukoJP_tur</div>
+      </a>
+      <a class="link-card" href="https://www.youtube.com/@轟Z子" target="_blank" rel="noopener">
+        <div class="link-label">YouTube</div>
+        <div class="link-name">轟Z子</div>
+      </a>
+      <a class="link-card" href="https://www.trash-up.com/sakasama/" target="_blank" rel="noopener">
+        <div class="link-label">Group</div>
+        <div class="link-name">SAKA-SAMA</div>
+      </a>
+      <a class="link-card" href="https://www.trash-up.com/artist/%E6%83%91%E6%98%9F%E9%80%9A%E4%BF%A1%E7%A4%BE" target="_blank" rel="noopener">
+        <div class="link-label">Group</div>
+        <div class="link-name">惑星通信社</div>
+      </a>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 class="section-title">Contact</h2>
+    <p>お仕事のご依頼・お問い合わせは <a href="https://zetsukojapan.com/">zetsukojapan.com</a> よりご連絡ください。</p>
+  </section>
+
+  <footer>
+    &copy; 2025 轟Z子 / TODOROKI ZETSUKO
+  </footer>
+
+</body>
+</html>
