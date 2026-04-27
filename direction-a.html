@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轟Z子 | TODOROKI ZETSUKO — Direction A</title>
+  <meta name="description" content="轟Z子（TODOROKI ZETSUKO）オフィシャルサイト。Direction A: Quiet / Conceptual.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Noto+Serif+JP:wght@200;300;400;600&display=swap');
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --color-bg: #f6f4ee;
+      --color-text: #1a1a1a;
+      --color-muted: #6a6a6a;
+      --color-rule: #d8d4c8;
+      --color-accent: #7a1318;
+      --font-serif-en: 'Cormorant Garamond', serif;
+      --font-serif-jp: 'Noto Serif JP', serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-serif-jp);
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-weight: 300;
+      line-height: 1.9;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Variant ribbon */
+    .variant-ribbon {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: var(--color-text);
+      color: var(--color-bg);
+      font-family: var(--font-serif-en);
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 0.4rem 1rem;
+    }
+    .variant-ribbon a {
+      color: var(--color-bg);
+      opacity: 0.6;
+      text-decoration: none;
+      margin: 0 0.6rem;
+      transition: opacity 0.3s;
+    }
+    .variant-ribbon a:hover { opacity: 1; }
+    .variant-ribbon .current { opacity: 1; border-bottom: 1px solid var(--color-bg); padding-bottom: 1px; }
+
+    nav.main {
+      position: fixed;
+      top: 28px;
+      width: 100%;
+      z-index: 100;
+      padding: 1.6rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      mix-blend-mode: difference;
+    }
+
+    nav.main .logo {
+      font-family: var(--font-serif-en);
+      font-size: 1rem;
+      font-style: italic;
+      letter-spacing: 0.05em;
+      color: #fff;
+    }
+
+    nav.main ul {
+      list-style: none;
+      display: flex;
+      gap: 2.4rem;
+    }
+
+    nav.main ul a {
+      color: #fff;
+      text-decoration: none;
+      font-family: var(--font-serif-en);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    /* Hero — text-led, image as caption */
+    .hero {
+      min-height: 100vh;
+      padding: 14rem 8vw 6rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .hero .eyebrow {
+      font-family: var(--font-serif-en);
+      font-size: 0.78rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif-jp);
+      font-size: clamp(3.2rem, 8vw, 8rem);
+      font-weight: 200;
+      letter-spacing: 0.04em;
+      line-height: 1.05;
+    }
+
+    .hero h1 em {
+      font-family: var(--font-serif-en);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--color-accent);
+    }
+
+    .hero .name-en {
+      font-family: var(--font-serif-en);
+      font-size: clamp(1rem, 1.8vw, 1.6rem);
+      font-style: italic;
+      letter-spacing: 0.18em;
+      color: var(--color-muted);
+      margin-top: 0.4rem;
+    }
+
+    .hero-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      max-width: 900px;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--color-rule);
+    }
+
+    .hero-meta .label {
+      font-family: var(--font-serif-en);
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-meta p {
+      font-size: 0.95rem;
+      max-width: 38ch;
+    }
+
+    /* Plate — single editorial image */
+    .plate {
+      max-width: 1200px;
+      margin: 6rem auto;
+      padding: 0 8vw;
+    }
+
+    .plate figure {
+      position: relative;
+    }
+
+    .plate img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: grayscale(0.15) contrast(1.02);
+    }
+
+    .plate figcaption {
+      font-family: var(--font-serif-en);
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-top: 1.2rem;
+      text-align: right;
+    }
+
+    /* Section base */
+    section.editorial {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 8rem 8vw;
+    }
+
+    .section-marker {
+      display: flex;
+      align-items: baseline;
+      gap: 1.2rem;
+      margin-bottom: 4rem;
+    }
+
+    .section-marker .num {
+      font-family: var(--font-serif-en);
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--color-accent);
+      letter-spacing: 0.12em;
+    }
+
+    .section-marker h2 {
+      font-family: var(--font-serif-en);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.02em;
+    }
+
+    /* Statement */
+    .statement p {
+      font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+      line-height: 2.1;
+      max-width: 28em;
+      font-weight: 300;
+    }
+
+    .statement p + p {
+      margin-top: 1.6rem;
+    }
+
+    /* Profile — definition list editorial */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: minmax(200px, 1fr) 2fr;
+      gap: 3rem 5rem;
+      align-items: start;
+    }
+
+    .profile-portrait {
+      width: 100%;
+      max-width: 280px;
+      filter: grayscale(0.2);
+    }
+
+    .profile-grid dl {
+      display: grid;
+      grid-template-columns: 8em 1fr;
+      gap: 1.2rem 2rem;
+      font-size: 0.95rem;
+    }
+
+    .profile-grid dt {
+      font-family: var(--font-serif-en);
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      padding-top: 0.4rem;
+    }
+
+    .profile-grid dd {
+      border-bottom: 1px solid var(--color-rule);
+      padding-bottom: 1rem;
+    }
+
+    /* Exhibition */
+    .exhibition-list {
+      list-style: none;
+      max-width: 880px;
+    }
+
+    .exhibition-list li {
+      display: grid;
+      grid-template-columns: 5em 1fr;
+      gap: 2.5rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--color-rule);
+      align-items: baseline;
+    }
+
+    .exhibition-list .year {
+      font-family: var(--font-serif-en);
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--color-accent);
+    }
+
+    .exhibition-list .title {
+      font-size: 1.1rem;
+      font-weight: 400;
+    }
+
+    .exhibition-list .venue {
+      font-family: var(--font-serif-en);
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--color-muted);
+      margin-top: 0.4rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Links */
+    .links-list {
+      list-style: none;
+      max-width: 600px;
+      border-top: 1px solid var(--color-rule);
+    }
+
+    .links-list a {
+      display: grid;
+      grid-template-columns: 8em 1fr auto;
+      gap: 2rem;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid var(--color-rule);
+      text-decoration: none;
+      color: var(--color-text);
+      align-items: baseline;
+      transition: color 0.3s;
+    }
+
+    .links-list a:hover {
+      color: var(--color-accent);
+    }
+
+    .links-list .ll-label {
+      font-family: var(--font-serif-en);
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+
+    .links-list .ll-name {
+      font-size: 0.98rem;
+    }
+
+    .links-list .ll-arrow {
+      font-family: var(--font-serif-en);
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--color-muted);
+    }
+
+    /* Contact */
+    .contact-block {
+      max-width: 700px;
+    }
+    .contact-block p {
+      font-family: var(--font-serif-en);
+      font-style: italic;
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+      font-weight: 300;
+      line-height: 1.5;
+    }
+    .contact-block a {
+      color: var(--color-accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--color-accent);
+    }
+
+    footer {
+      text-align: center;
+      padding: 4rem 2rem 5rem;
+      font-family: var(--font-serif-en);
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+
+    @media (max-width: 768px) {
+      nav.main {
+        padding: 1.2rem 1.5rem;
+      }
+      nav.main ul { gap: 1.2rem; }
+      .hero { padding: 9rem 6vw 4rem; }
+      .hero-meta { grid-template-columns: 1fr; gap: 2rem; }
+      .profile-grid { grid-template-columns: 1fr; }
+      .profile-grid dl { grid-template-columns: 1fr; gap: 0.4rem; }
+      .profile-grid dt { padding-top: 1rem; }
+      .exhibition-list li { grid-template-columns: 1fr; gap: 0.4rem; }
+      .links-list a { grid-template-columns: 1fr auto; }
+      .links-list .ll-label { grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="variant-ribbon">
+    <span class="current">Direction A — Quiet / Conceptual</span>
+    <a href="direction-b.html">→ B</a>
+    <a href="index.html">→ V0</a>
+  </div>
+
+  <nav class="main">
+    <div class="logo">Todoroki Zetsuko</div>
+    <ul>
+      <li><a href="#statement">Statement</a></li>
+      <li><a href="#profile">Profile</a></li>
+      <li><a href="#exhibition">Exhibition</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="eyebrow">Official Site — 2026</div>
+    <h1>轟<em>Z</em>子</h1>
+    <div class="name-en">Todoroki Zetsuko</div>
+
+    <div class="hero-meta">
+      <div>
+        <div class="label">Practice</div>
+        <p>アイドル、ノイズ、インタラクティブな音楽表現。従来のアイドル像を拡張し、新たなフィールドと接続する。</p>
+      </div>
+      <div>
+        <div class="label">Affiliation</div>
+        <p>SAKA-SAMA / 惑星通信社<br>東京藝術大学大学院 映像研究科 在籍</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="plate">
+    <figure>
+      <img src="images/photo-portrait.jpg" alt="轟Z子">
+      <figcaption>Portrait, 2025</figcaption>
+    </figure>
+  </div>
+
+  <section id="statement" class="editorial statement">
+    <div class="section-marker">
+      <span class="num">— 01</span>
+      <h2>Statement</h2>
+    </div>
+    <p>アイドルとして人前に立つこと、ノイズを鳴らすこと、Maxで音と映像を制御すること。それぞれは別々の言語のようでいて、私の中ではひとつの問いとしてつながっている。</p>
+    <p>従来のアイドル像を拡張し、新しいフィールドへ接続する——その実験を、ステージでも、画面の中でも続けている。</p>
+  </section>
+
+  <div class="plate">
+    <figure>
+      <img src="images/photo-pose.jpg" alt="Performance">
+      <figcaption>Performance documentation, 2025</figcaption>
+    </figure>
+  </div>
+
+  <section id="profile" class="editorial">
+    <div class="section-marker">
+      <span class="num">— 02</span>
+      <h2>Profile</h2>
+    </div>
+    <div class="profile-grid">
+      <img class="profile-portrait" src="images/icon-red.jpg" alt="轟Z子">
+      <dl>
+        <dt>Name</dt>
+        <dd>轟Z子 / Todoroki Zetsuko</dd>
+        <dt>Born</dt>
+        <dd>宮城県</dd>
+        <dt>Education</dt>
+        <dd>2024 武蔵野美術大学 造形構想学部 映像学科 卒業<br>2024 東京藝術大学大学院 映像研究科 入学</dd>
+        <dt>Group</dt>
+        <dd>SAKA-SAMA / 惑星通信社</dd>
+        <dt>Practice</dt>
+        <dd>Performance, Noise, Interactive media (Max/MSP)</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section id="exhibition" class="editorial">
+    <div class="section-marker">
+      <span class="num">— 03</span>
+      <h2>Selected Exhibitions</h2>
+    </div>
+    <ul class="exhibition-list">
+      <li>
+        <span class="year">2025</span>
+        <div>
+          <div class="title">NEW PLATFORM — Alternative ASIA</div>
+          <div class="venue">Yokohama</div>
+        </div>
+      </li>
+      <li>
+        <span class="year">2025</span>
+        <div>
+          <div class="title">アイドルと芸術 8</div>
+          <div class="venue">mograg gallery, Tokyo</div>
+        </div>
+      </li>
+      <li>
+        <span class="year">2024</span>
+        <div>
+          <div class="title">アイドルと芸術 7</div>
+          <div class="venue">mograg gallery, Tokyo</div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section id="links" class="editorial">
+    <div class="section-marker">
+      <span class="num">— 04</span>
+      <h2>Channels</h2>
+    </div>
+    <ul class="links-list">
+      <li><a href="https://x.com/ZetsukoJP_tur" target="_blank" rel="noopener">
+        <span class="ll-label">X / Twitter</span><span class="ll-name">@ZetsukoJP_tur</span><span class="ll-arrow">↗</span>
+      </a></li>
+      <li><a href="https://www.instagram.com/ZetsukoJP_tur" target="_blank" rel="noopener">
+        <span class="ll-label">Instagram</span><span class="ll-name">@ZetsukoJP_tur</span><span class="ll-arrow">↗</span>
+      </a></li>
+      <li><a href="https://www.tiktok.com/@ZetsukoJP_tur" target="_blank" rel="noopener">
+        <span class="ll-label">TikTok</span><span class="ll-name">@ZetsukoJP_tur</span><span class="ll-arrow">↗</span>
+      </a></li>
+      <li><a href="https://www.youtube.com/@轟Z子" target="_blank" rel="noopener">
+        <span class="ll-label">YouTube</span><span class="ll-name">轟Z子</span><span class="ll-arrow">↗</span>
+      </a></li>
+      <li><a href="https://www.trash-up.com/sakasama/" target="_blank" rel="noopener">
+        <span class="ll-label">Group</span><span class="ll-name">SAKA-SAMA</span><span class="ll-arrow">↗</span>
+      </a></li>
+      <li><a href="https://www.trash-up.com/artist/%E6%83%91%E6%98%9F%E9%80%9A%E4%BF%A1%E7%A4%BE" target="_blank" rel="noopener">
+        <span class="ll-label">Group</span><span class="ll-name">惑星通信社</span><span class="ll-arrow">↗</span>
+      </a></li>
+    </ul>
+  </section>
+
+  <section id="contact" class="editorial">
+    <div class="section-marker">
+      <span class="num">— 05</span>
+      <h2>Contact</h2>
+    </div>
+    <div class="contact-block">
+      <p>For inquiries and bookings, please reach out via <a href="https://zetsukojapan.com/">zetsukojapan.com</a>.</p>
+    </div>
+  </section>
+
+  <footer>© 2025 Todoroki Zetsuko</footer>
+
+</body>
+</html>

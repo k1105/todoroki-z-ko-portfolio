@@ -318,6 +318,35 @@
       letter-spacing: 0.12em;
     }
 
+    /* Variant ribbon */
+    .variant-ribbon {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: #fff;
+      color: #000;
+      font-family: sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 0.4rem 1rem;
+    }
+    .variant-ribbon a {
+      color: #000;
+      opacity: 0.55;
+      text-decoration: none;
+      margin: 0 0.6rem;
+      transition: opacity 0.3s;
+    }
+    .variant-ribbon a:hover { opacity: 1; }
+    .variant-ribbon .current { opacity: 1; border-bottom: 1px solid #000; padding-bottom: 1px; }
+
+    nav { top: 28px !important; }
+
     /* Responsive */
     @media (max-width: 768px) {
       nav {
@@ -387,6 +416,12 @@
   </style>
 </head>
 <body>
+
+  <div class="variant-ribbon">
+    <a href="direction-a.html">A ←</a>
+    <a href="direction-b.html">B ←</a>
+    <span class="current">V0 — Current</span>
+  </div>
 
   <nav>
     <div class="logo">轟Z子</div>
