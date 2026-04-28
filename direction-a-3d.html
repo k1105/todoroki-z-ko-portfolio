@@ -595,6 +595,7 @@
     const ambient = new THREE.AmbientLight(0xb8c4d6, 0.32);
     scene.add(ambient);
 
+    // Key light — orbits around the car (position updated each frame)
     const dirLight = new THREE.DirectionalLight(0xffffff, 1.6);
     dirLight.position.set(8, 14, 6);
     dirLight.castShadow = !isMobile;
@@ -609,11 +610,17 @@
       dirLight.shadow.bias = -0.0005;
     }
     scene.add(dirLight);
+    scene.add(dirLight.target);
 
-    // Rim light — picks out silhouettes against the black void
-    const rim = new THREE.DirectionalLight(0xd01020, 0.45);
+    // Rim light — picks out silhouettes; counter-orbits for depth
+    const rim = new THREE.DirectionalLight(0xd01020, 0.55);
     rim.position.set(-6, 4, -8);
     scene.add(rim);
+    scene.add(rim.target);
+
+    // Orbit params: key light circles overhead, rim circles low and opposite
+    const KEY_ORBIT = { radius: 12, height: 9, speed: 0.55 };
+    const RIM_ORBIT = { radius: 10, height: 3.5, speed: -0.32, phase: Math.PI * 0.7 };
 
     // No ground plane — canvas overlays the page, so a ground would just
     // paint a dark band over the text. The car floats over the page.
@@ -847,6 +854,25 @@
       }
 
       updateParts(assembleP, time);
+
+      // Lights orbit around the car continuously (key + rim, opposite directions)
+      const keyA = time * KEY_ORBIT.speed;
+      dirLight.position.set(
+        carWorldPos.x + Math.cos(keyA) * KEY_ORBIT.radius,
+        carWorldPos.y + KEY_ORBIT.height,
+        carWorldPos.z + Math.sin(keyA) * KEY_ORBIT.radius
+      );
+      dirLight.target.position.copy(carWorldPos);
+      dirLight.target.updateMatrixWorld();
+
+      const rimA = time * RIM_ORBIT.speed + RIM_ORBIT.phase;
+      rim.position.set(
+        carWorldPos.x + Math.cos(rimA) * RIM_ORBIT.radius,
+        carWorldPos.y + RIM_ORBIT.height,
+        carWorldPos.z + Math.sin(rimA) * RIM_ORBIT.radius
+      );
+      rim.target.position.copy(carWorldPos);
+      rim.target.updateMatrixWorld();
 
       camera.position.copy(camPos);
       lookTarget.copy(carWorldPos);
