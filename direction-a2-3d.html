@@ -165,17 +165,70 @@
     .scroll-section.align-left { justify-content: flex-start; }
     .scroll-section.align-center { justify-content: center; }
 
-    /* Hero */
+    /* Hero — split layout: text-left + KV-right (Z子 chrome portrait).
+       The KV is a placeholder PNG that will be swapped out for the proper
+       key visual once it's delivered. */
     .hero {
       min-height: 100vh;
       padding: 9rem 6vw 4rem;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-end;
+      flex-direction: row;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: 4vw;
+      position: relative;
     }
 
     .hero .section-content {
-      max-width: 900px;
+      max-width: 720px;
+      flex: 1 1 50%;
+      align-self: flex-end;
+    }
+
+    .hero .kv-wrap {
+      flex: 1 1 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 720px;
+    }
+
+    .hero .kv-wrap::before {
+      /* radial bloom behind the KV — deeper red than the page gradient */
+      content: '';
+      position: absolute;
+      inset: -10% -5%;
+      background:
+        radial-gradient(ellipse at 50% 45%, rgba(255, 60, 80, 0.55) 0%, rgba(180, 20, 40, 0.25) 35%, transparent 70%);
+      filter: blur(8px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero .kv {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 560px;
+      height: auto;
+      filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.6))
+              drop-shadow(0 0 30px rgba(255, 40, 60, 0.35));
+    }
+
+    .hero .kv-placeholder-tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 2;
+      font-family: var(--font-display-en);
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-bg-deep);
+      background: var(--color-chrome);
+      padding: 0.3rem 0.55rem;
+      border-radius: 2px;
+      opacity: 0.85;
     }
 
     .hero .eyebrow {
@@ -265,14 +318,26 @@
       text-transform: uppercase;
     }
 
-    /* Part badge — placeholder for the body part / car part assigned to this section.
-       This is what will eventually be replaced by a metallic 3D parts render. */
+    /* Part thumbnail — the body-part / car-part placeholder image that sits
+       above each section title. The PNGs are crops from the AD's parts-strip
+       reference and will be swapped for higher-fidelity renders later. */
+    .part-thumb {
+      display: block;
+      width: 220px;
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 1.2rem;
+      filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.55))
+              drop-shadow(0 0 14px rgba(255, 32, 48, 0.2));
+    }
+
+    /* Part badge — caption line under the thumbnail naming the body↔car parts. */
     .part-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.7rem;
-      margin-bottom: 2.2rem;
-      padding: 0.4rem 0.9rem 0.4rem 0.4rem;
+      gap: 0.6rem;
+      margin-bottom: 1.6rem;
+      padding: 0.35rem 0.85rem;
       border: 1px solid var(--color-rule);
       border-radius: 999px;
       background:
@@ -282,19 +347,6 @@
           rgba(255, 32, 48, 0.05) 100%);
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
-    }
-    .part-badge .swatch {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      /* Chrome iridescent fake — radial highlight with rainbow ring */
-      background:
-        radial-gradient(circle at 30% 25%, #ffffff 0%, #d8d2dc 25%, #6a5560 55%, #2a1a22 100%),
-        conic-gradient(from 220deg, #c8e0ff, #f8d8e8, #e8f0c8, #c8e0ff);
-      background-blend-mode: screen;
-      box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.4),
-        0 0 12px rgba(255, 32, 48, 0.3);
     }
     .part-badge .label-en {
       font-family: var(--font-display-en);
@@ -485,7 +537,21 @@
 
       .hero {
         padding: 7rem 1.4rem 3rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 2rem;
       }
+      .hero .section-content {
+        max-width: 100%;
+        flex: 0 0 auto;
+        align-self: flex-start;
+      }
+      .hero .kv-wrap {
+        flex: 0 0 auto;
+        max-width: 100%;
+        order: -1; /* show KV above the text on mobile */
+      }
+      .hero .kv { max-width: 78vw; }
       .hero h1 { font-size: clamp(2.6rem, 16vw, 5rem); }
       .hero .name-en { font-size: 0.78rem; }
       .hero .concept-tag { font-size: 0.7rem; }
@@ -494,7 +560,8 @@
       .section-marker { gap: 0.8rem; margin-bottom: 1.0rem; }
       .section-marker h2 { font-size: clamp(1.3rem, 6vw, 1.8rem); }
 
-      .part-badge { margin-bottom: 1.4rem; }
+      .part-thumb { width: 56vw; max-width: 220px; margin-bottom: 0.8rem; }
+      .part-badge { margin-bottom: 1.2rem; }
       .part-badge .label-en { font-size: 0.55rem; }
       .part-badge .label-jp { font-size: 0.68rem; }
 
@@ -550,16 +617,20 @@
         </div>
         <div class="scroll-hint">Scroll ↓</div>
       </div>
+      <div class="kv-wrap">
+        <span class="kv-placeholder-tag">KV · Placeholder</span>
+        <img class="kv" src="images/zetsuko-hero-kv.png" alt="轟Z子 — chrome metallic key visual (placeholder)">
+      </div>
     </section>
 
     <section id="statement" class="scroll-section align-right">
       <div class="section-content">
+        <img class="part-thumb" src="images/part-01.png" alt="Right twintail — 轟Z子 body part placeholder">
         <div class="section-marker">
           <span class="num">— 01</span>
           <h2>Statement</h2>
         </div>
         <div class="part-badge">
-          <span class="swatch" aria-hidden="true"></span>
           <span class="label-en">Right Twintail</span>
           <span class="equiv-mark">≒</span>
           <span class="label-jp">ツインテール（右）</span>
@@ -573,12 +644,12 @@
 
     <section id="profile" class="scroll-section align-left">
       <div class="section-content profile-block">
+        <img class="part-thumb" src="images/part-02.png" alt="Left eye — 轟Z子 body part placeholder">
         <div class="section-marker">
           <span class="num">— 02</span>
           <h2>Profile</h2>
         </div>
         <div class="part-badge">
-          <span class="swatch" aria-hidden="true"></span>
           <span class="label-en">Left Eye</span>
           <span class="equiv-mark">≒</span>
           <span class="label-jp">左目</span>
@@ -600,12 +671,12 @@
 
     <section id="exhibition" class="scroll-section align-right">
       <div class="section-content">
+        <img class="part-thumb" src="images/part-03.png" alt="Wheel — car part placeholder">
         <div class="section-marker">
           <span class="num">— 03</span>
           <h2>Selected Exhibitions</h2>
         </div>
         <div class="part-badge">
-          <span class="swatch" aria-hidden="true"></span>
           <span class="label-en">Wheel</span>
           <span class="equiv-mark">≒</span>
           <span class="label-jp">ホイール（歩んできた道）</span>
@@ -638,12 +709,12 @@
 
     <section id="channels" class="scroll-section align-left">
       <div class="section-content">
+        <img class="part-thumb" src="images/part-05.png" alt="Door mirror ≒ ear — placeholder">
         <div class="section-marker">
           <span class="num">— 04</span>
           <h2>Channels</h2>
         </div>
         <div class="part-badge">
-          <span class="swatch" aria-hidden="true"></span>
           <span class="label-en">Door Mirror</span>
           <span class="equiv-mark">≒</span>
           <span class="label-jp">ドアミラー（耳）</span>
@@ -667,15 +738,15 @@
 
     <section id="contact" class="scroll-section align-center">
       <div class="section-content">
+        <img class="part-thumb" src="images/part-07.png" alt="Muffler ≒ horn / outward signal — placeholder">
         <div class="section-marker">
           <span class="num">— 05</span>
           <h2>Contact</h2>
         </div>
         <div class="part-badge">
-          <span class="swatch" aria-hidden="true"></span>
-          <span class="label-en">Headlight / Horn</span>
+          <span class="label-en">Muffler</span>
           <span class="equiv-mark">≒</span>
-          <span class="label-jp">ヘッドライト／ホーン（外への発信・"轟"）</span>
+          <span class="label-jp">マフラー（外への発信・"轟"）</span>
         </div>
         <div class="contact-block">
           <p>For inquiries and bookings, please reach out via <a href="https://zetsukojapan.com/">zetsukojapan.com</a>.</p>
@@ -1079,6 +1150,13 @@
         }
       }
       flashEl.style.opacity = flashOp.toFixed(3);
+
+      // Hero priority: let the Z子 KV own the first viewport. The 3D scene
+      // fades in as the user starts scrolling so it stops competing with the
+      // hero portrait, and reaches full intensity by the time the car has
+      // begun assembling.
+      const canvasOp = clamp01((t - 0.02) / 0.18);
+      canvas.style.opacity = canvasOp.toFixed(3);
 
       renderer.render(scene, camera);
     }
