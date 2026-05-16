@@ -48,31 +48,6 @@
       background-attachment: fixed;
     }
 
-    /* Three.js canvas — sits ABOVE the text so the car overlays content,
-       with a transparent clear so empty pixels reveal the page underneath. */
-    canvas.scene {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 5;
-      display: block;
-      pointer-events: none;
-    }
-
-    /* Flash overlay — fires at the assembly moment */
-    .flash-overlay {
-      position: fixed;
-      inset: 0;
-      background: #ffffff;
-      pointer-events: none;
-      z-index: 50;
-      opacity: 0;
-      mix-blend-mode: screen;
-      will-change: opacity;
-    }
-
     /* Variant ribbon */
     .variant-ribbon {
       position: fixed;
@@ -165,70 +140,46 @@
     .scroll-section.align-left { justify-content: flex-start; }
     .scroll-section.align-center { justify-content: center; }
 
-    /* Hero — split layout: text-left + KV-right (Z子 chrome portrait).
-       The KV is a placeholder PNG that will be swapped out for the proper
-       key visual once it's delivered. */
+    /* Hero — full-bleed Z子 KV. The portrait fills the viewport on first
+       load; the text block overlays the lower-left so the title and the
+       figure share the frame. */
     .hero {
       min-height: 100vh;
-      padding: 9rem 6vw 4rem;
-      flex-direction: row;
-      align-items: stretch;
-      justify-content: space-between;
-      gap: 4vw;
-      position: relative;
-    }
-
-    .hero .section-content {
-      max-width: 720px;
-      flex: 1 1 50%;
-      align-self: flex-end;
-    }
-
-    .hero .kv-wrap {
-      flex: 1 1 50%;
-      position: relative;
+      padding: 0;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      max-width: 720px;
+      align-items: stretch;
+      justify-content: stretch;
+      position: relative;
+      overflow: hidden;
     }
 
-    .hero .kv-wrap::before {
-      /* radial bloom behind the KV — deeper red than the page gradient */
-      content: '';
+    .hero .kv-layer {
       position: absolute;
-      inset: -10% -5%;
-      background:
-        radial-gradient(ellipse at 50% 45%, rgba(255, 60, 80, 0.55) 0%, rgba(180, 20, 40, 0.25) 35%, transparent 70%);
-      filter: blur(8px);
-      pointer-events: none;
+      inset: 0;
+      background-image: url('images/zetsuko-hero-kv.png');
+      background-size: contain;
+      background-position: center bottom;
+      background-repeat: no-repeat;
       z-index: 0;
     }
 
-    .hero .kv {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 560px;
-      height: auto;
-      filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.6))
-              drop-shadow(0 0 30px rgba(255, 40, 60, 0.35));
+    .hero .kv-layer::after {
+      /* Subtle bottom-up gradient so the overlaid title text stays readable */
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(8, 1, 10, 0.78) 0%, rgba(8, 1, 10, 0.35) 22%, transparent 55%),
+        radial-gradient(ellipse at 20% 90%, rgba(8, 1, 10, 0.55), transparent 50%);
+      pointer-events: none;
     }
 
-    .hero .kv-placeholder-tag {
-      position: absolute;
-      top: 12px;
-      right: 12px;
+    .hero .section-content {
+      position: relative;
       z-index: 2;
-      font-family: var(--font-display-en);
-      font-size: 0.55rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--color-bg-deep);
-      background: var(--color-chrome);
-      padding: 0.3rem 0.55rem;
-      border-radius: 2px;
-      opacity: 0.85;
+      align-self: flex-end;
+      padding: 0 6vw 5rem;
+      max-width: 900px;
     }
 
     .hero .eyebrow {
@@ -536,22 +487,23 @@
       }
 
       .hero {
-        padding: 7rem 1.4rem 3rem;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 2rem;
+        padding: 0;
+        min-height: 100svh;
+      }
+      .hero .kv-layer {
+        background-size: contain;
+        background-position: center 18%;
+      }
+      .hero .kv-layer::after {
+        background:
+          linear-gradient(to top, rgba(8, 1, 10, 0.88) 0%, rgba(8, 1, 10, 0.45) 28%, transparent 60%),
+          radial-gradient(ellipse at 50% 95%, rgba(8, 1, 10, 0.7), transparent 55%);
       }
       .hero .section-content {
+        padding: 0 1.4rem 2.5rem;
+        align-self: flex-end;
         max-width: 100%;
-        flex: 0 0 auto;
-        align-self: flex-start;
       }
-      .hero .kv-wrap {
-        flex: 0 0 auto;
-        max-width: 100%;
-        order: -1; /* show KV above the text on mobile */
-      }
-      .hero .kv { max-width: 78vw; }
       .hero h1 { font-size: clamp(2.6rem, 16vw, 5rem); }
       .hero .name-en { font-size: 0.78rem; }
       .hero .concept-tag { font-size: 0.7rem; }
@@ -585,9 +537,6 @@
 </head>
 <body>
 
-  <canvas class="scene"></canvas>
-  <div class="flash-overlay"></div>
-
   <div class="variant-ribbon">
     <span class="current">Direction A2 — Metallic / Concept (WIP)</span>
     <a href="direction-a-3d.html">→ A 3D</a>
@@ -608,6 +557,7 @@
   <div class="scroll-stage">
 
     <section class="hero scroll-section align-left">
+      <div class="kv-layer" role="img" aria-label="轟Z子 — chrome metallic key visual (placeholder)"></div>
       <div class="section-content">
         <div class="eyebrow">Official Site — 2026</div>
         <h1>轟<em>Z</em>子</h1>
@@ -616,10 +566,6 @@
           ZETSUKO <span class="equiv">≒</span> THE CAR — assembled by your support.
         </div>
         <div class="scroll-hint">Scroll ↓</div>
-      </div>
-      <div class="kv-wrap">
-        <span class="kv-placeholder-tag">KV · Placeholder</span>
-        <img class="kv" src="images/zetsuko-hero-kv.png" alt="轟Z子 — chrome metallic key visual (placeholder)">
       </div>
     </section>
 
@@ -760,248 +706,9 @@
 
   <div class="wip-banner">A2 · Tonality WIP</div>
 
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
-      }
-    }
-  </script>
-  <script type="module">
-    import * as THREE from 'three';
-
-    const isMobile = window.matchMedia('(max-width: 768px)').matches
-                     || ('ontouchstart' in window && Math.min(window.innerWidth, window.innerHeight) < 800);
-
-    const canvas = document.querySelector('canvas.scene');
-    const scene = new THREE.Scene();
-    // Transparent scene background — body's CSS radial-gradient provides the
-    // red abstract space; canvas only writes opaque pixels where geometry exists.
-    scene.background = null;
-    // Subtle red haze in depth so the marker sculptures and car tail fade into the bloom
-    scene.fog = new THREE.Fog(new THREE.Color(0x4a0810), 8, 52);
-
-    const camera = new THREE.PerspectiveCamera(isMobile ? 50 : 42, window.innerWidth / window.innerHeight, 0.1, 200);
-
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isMobile, alpha: true, powerPreference: 'high-performance' });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
-    renderer.setClearColor(0x000000, 0);
-    renderer.shadowMap.enabled = !isMobile;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.0;
-
-    // ---- Environment map (procedural gradient) for chrome reflections ----
-    // Use PMREMGenerator + a simple gradient render target so MeshPhysicalMaterial's
-    // metalness/iridescence has something to reflect, instead of a flat fallback.
-    const pmrem = new THREE.PMREMGenerator(renderer);
-    pmrem.compileEquirectangularShader();
-    const envScene = new THREE.Scene();
-    const envGeom = new THREE.SphereGeometry(50, 32, 32);
-    const envCanvas = document.createElement('canvas');
-    envCanvas.width = 512; envCanvas.height = 256;
-    const ectx = envCanvas.getContext('2d');
-    const grad = ectx.createLinearGradient(0, 0, 0, 256);
-    grad.addColorStop(0.00, '#ffd0d0'); // ceiling — bright bloom
-    grad.addColorStop(0.35, '#ff3040'); // upper red
-    grad.addColorStop(0.55, '#80101a'); // mid deep red
-    grad.addColorStop(0.85, '#1a0407'); // floor — dark
-    grad.addColorStop(1.00, '#000000');
-    ectx.fillStyle = grad;
-    ectx.fillRect(0, 0, 512, 256);
-    // Sprinkle highlights so chrome has variation
-    ectx.fillStyle = 'rgba(255, 240, 240, 0.85)';
-    ectx.fillRect(40, 30, 80, 4);
-    ectx.fillRect(360, 50, 110, 3);
-    ectx.fillRect(200, 12, 60, 2);
-    const envTex = new THREE.CanvasTexture(envCanvas);
-    envTex.mapping = THREE.EquirectangularReflectionMapping;
-    envTex.colorSpace = THREE.SRGBColorSpace;
-    const envMat = new THREE.MeshBasicMaterial({ map: envTex, side: THREE.BackSide });
-    envScene.add(new THREE.Mesh(envGeom, envMat));
-    const envRT = pmrem.fromScene(envScene, 0.04);
-    scene.environment = envRT.texture;
-    envMat.dispose();
-    envGeom.dispose();
-    pmrem.dispose();
-
-    // Lights — ambient red, white key, chrome highlight rim
-    const ambient = new THREE.AmbientLight(0xff4040, 0.35);
-    scene.add(ambient);
-
-    // Key light — bright white, orbits around the car (position updated each frame)
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.4);
-    dirLight.position.set(8, 14, 6);
-    dirLight.castShadow = !isMobile;
-    if (!isMobile) {
-      dirLight.shadow.mapSize.set(1024, 1024);
-      dirLight.shadow.camera.near = 0.5;
-      dirLight.shadow.camera.far = 60;
-      dirLight.shadow.camera.left = -30;
-      dirLight.shadow.camera.right = 30;
-      dirLight.shadow.camera.top = 30;
-      dirLight.shadow.camera.bottom = -30;
-      dirLight.shadow.bias = -0.0005;
-    }
-    scene.add(dirLight);
-    scene.add(dirLight.target);
-
-    // Rim light — saturated red, counter-orbits to keep the silhouette glowing
-    const rim = new THREE.DirectionalLight(0xff1828, 0.75);
-    rim.position.set(-6, 4, -8);
-    scene.add(rim);
-    scene.add(rim.target);
-
-    // Orbit params: key light circles overhead, rim circles low and opposite
-    const KEY_ORBIT = { radius: 12, height: 9, speed: 0.55 };
-    const RIM_ORBIT = { radius: 10, height: 3.5, speed: -0.32, phase: Math.PI * 0.7 };
-
-    // ---- Distant sculptural markers — chrome shards in the red space ----
-    const markerMat = new THREE.MeshPhysicalMaterial({
-      color: 0xc8c0d0,
-      metalness: 1.0,
-      roughness: 0.18,
-      iridescence: 0.7,
-      iridescenceIOR: 1.4,
-      envMapIntensity: 1.0,
-    });
-    const markers = [
-      { geom: new THREE.CylinderGeometry(0.18, 0.18, 4, 16), pos: [-6, 2, -25] },
-      { geom: new THREE.SphereGeometry(0.9, 24, 24), pos: [7, 0.9, -38] },
-      { geom: new THREE.BoxGeometry(3, 0.25, 0.6), pos: [-7, 0.13, -52] },
-      { geom: new THREE.ConeGeometry(0.7, 1.6, 16), pos: [6, 0.8, -66] },
-      { geom: new THREE.BoxGeometry(0.6, 0.6, 0.6), pos: [-2, 0.3, -80] },
-    ];
-    markers.forEach((m) => {
-      const mesh = new THREE.Mesh(m.geom, markerMat);
-      mesh.position.set(...m.pos);
-      mesh.castShadow = true;
-      mesh.receiveShadow = true;
-      scene.add(mesh);
-    });
-
-    // ---- Car (placeholder low-poly — metallic Benz-ish body, assembled from parts) ----
-    // Rotate the group so the car's natural +x forward axis maps to world -z,
-    // i.e. the car ends up facing into the screen with its tail toward camera.
-    const car = new THREE.Group();
-    car.rotation.y = Math.PI / 2;
-    scene.add(car);
-
-    // Metallic body — silver chrome with a hint of iridescence (PROMT / Benz reference).
-    // Will eventually be replaced by a proper GLTF model + Z子 metallic-robot mesh.
-    const bodyMat = new THREE.MeshPhysicalMaterial({
-      color: 0xe8e4ec,
-      metalness: 1.0,
-      roughness: 0.12,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.05,
-      iridescence: 0.55,
-      iridescenceIOR: 1.45,
-      envMapIntensity: 1.1,
-    });
-    const glassMat = new THREE.MeshPhysicalMaterial({
-      color: 0x080010,
-      roughness: 0.08,
-      metalness: 0.4,
-      transmission: 0.35,
-      transparent: true,
-      opacity: 0.85,
-      envMapIntensity: 1.2,
-    });
-    const accentMat = new THREE.MeshBasicMaterial({ color: 0xff2030 });
-    const wheelMat = new THREE.MeshPhysicalMaterial({
-      color: 0x202028,
-      metalness: 0.9,
-      roughness: 0.32,
-    });
-
-    // Each part has a target (assembled) state and a scattered start state.
-    const carParts = [];
-    const tmpQuatA = new THREE.Quaternion();
-    const tmpQuatB = new THREE.Quaternion();
-
-    function addPart(geom, mat, targetPosArr, targetRotArr) {
-      const mesh = new THREE.Mesh(geom, mat);
-      mesh.castShadow = true;
-      mesh.receiveShadow = true;
-      car.add(mesh);
-
-      const targetPos = new THREE.Vector3().fromArray(targetPosArr);
-      const targetRot = new THREE.Euler().fromArray(targetRotArr || [0, 0, 0]);
-      const targetQuat = new THREE.Quaternion().setFromEuler(targetRot);
-
-      // Scatter parts in a wide volume around (and in front of) the assembly point
-      const scatteredPos = new THREE.Vector3(
-        (Math.random() - 0.5) * 16,
-        Math.random() * 8 + 1.0,
-        (Math.random() - 0.5) * 12 + 1.5,
-      );
-      const scatteredRot = new THREE.Euler(
-        Math.random() * Math.PI * 2,
-        Math.random() * Math.PI * 2,
-        Math.random() * Math.PI * 2,
-      );
-      const scatteredQuat = new THREE.Quaternion().setFromEuler(scatteredRot);
-
-      // Tumbling axis for scattered phase
-      const tumbleAxis = new THREE.Vector3(
-        Math.random() - 0.5,
-        Math.random() - 0.5,
-        Math.random() - 0.5,
-      ).normalize();
-      const tumbleSpeed = 0.4 + Math.random() * 0.5;
-
-      carParts.push({
-        mesh,
-        targetPos,
-        targetQuat,
-        scatteredPos,
-        scatteredQuat,
-        tumbleAxis,
-        tumbleSpeed,
-      });
-    }
-
-    // Body (lower + upper "hood" stack)
-    addPart(new THREE.BoxGeometry(2.6, 0.5, 1.15), bodyMat, [0, 0.42, 0]);
-    addPart(new THREE.BoxGeometry(2.4, 0.25, 1.05), bodyMat, [0, 0.78, 0]);
-    // Cabin (glass)
-    addPart(new THREE.BoxGeometry(1.25, 0.45, 0.95), glassMat, [-0.15, 1.12, 0]);
-    // Tail lights
-    addPart(new THREE.BoxGeometry(0.08, 0.12, 0.35), accentMat, [-1.34, 0.6, 0.4]);
-    addPart(new THREE.BoxGeometry(0.08, 0.12, 0.35), accentMat, [-1.34, 0.6, -0.4]);
-    // Wheels (sideways cylinder)
-    const wheelGeom = new THREE.CylinderGeometry(0.32, 0.32, 0.22, 18);
-    const wheelOffsets = [
-      [0.85, 0.6], [0.85, -0.6],
-      [-0.85, 0.6], [-0.85, -0.6],
-    ];
-    wheelOffsets.forEach(([x, z]) => {
-      addPart(wheelGeom, wheelMat, [x, 0.32, z], [Math.PI / 2, 0, 0]);
-    });
-
-    // ---- Scroll handling ----
-    let scrollTarget = 0;
-    let scrollSmoothed = 0;
-
-    function readScroll() {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      scrollTarget = max > 0 ? Math.max(0, Math.min(1, window.scrollY / max)) : 0;
-    }
-    window.addEventListener('scroll', readScroll, { passive: true });
-    readScroll();
-
-    // ---- Resize ----
-    function onResize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-    window.addEventListener('resize', onResize);
-
-    // ---- Section reveal on intersect ----
+  <script>
+    // Minimal reveal: fade each section's content in as it enters the viewport.
+    // The Three.js scene was removed in favor of static AD-provided images.
     const sectionContents = document.querySelectorAll('.section-content');
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -1009,158 +716,6 @@
       });
     }, { threshold: 0.25 });
     sectionContents.forEach((el) => io.observe(el));
-
-    // ---- Sequence animation ----
-    const clock = new THREE.Clock();
-    const flashEl = document.querySelector('.flash-overlay');
-
-    // Phase boundaries (scroll progress)
-    const PH = {
-      assembleStart: 0.00,
-      assembleSnap:  0.28,   // hard snap-in begins
-      assembleDone:  0.32,   // fully assembled (flash fires here)
-      obliqueDone:   0.55,   // camera reaches oblique view
-      behindDone:    0.78,   // camera reaches directly-behind position
-      // 0.78 → 1.00 = drive-off
-    };
-
-    const camFront   = new THREE.Vector3(0, 2.2, 7.5);
-    const camOblique = new THREE.Vector3(5.0, 4.0, 5.0);
-    const camBehind  = new THREE.Vector3(0, 2.4, 8.0);
-    const lookTarget = new THREE.Vector3();
-    const tmpVec     = new THREE.Vector3();
-
-    function easeInOutCubic(p) {
-      return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
-    }
-    function easeInQuad(p) { return p * p; }
-    function clamp01(v) { return Math.max(0, Math.min(1, v)); }
-
-    // Flash state — event-triggered on entering the assembly window so it stays
-    // snappy regardless of scroll speed.
-    let flashStart = -Infinity;
-    let prevAssembled = false;
-
-    function updateParts(assembleP, time) {
-      // assembleP: 0 = scattered, 1 = locked into car
-      const ease = easeInOutCubic(assembleP);
-      const tumbleFactor = 1 - assembleP; // tumbling fades out as we assemble
-
-      carParts.forEach((part) => {
-        // Position: lerp scattered → target
-        part.mesh.position.lerpVectors(part.scatteredPos, part.targetPos, ease);
-
-        // Rotation: scattered start, plus tumbling, slerped toward target
-        if (tumbleFactor > 0.001) {
-          tmpQuatA.copy(part.scatteredQuat);
-          tmpQuatB.setFromAxisAngle(part.tumbleAxis, time * part.tumbleSpeed);
-          tmpQuatA.multiply(tmpQuatB);
-        } else {
-          tmpQuatA.copy(part.scatteredQuat);
-        }
-        part.mesh.quaternion.slerpQuaternions(tmpQuatA, part.targetQuat, ease);
-      });
-    }
-
-    function animate() {
-      requestAnimationFrame(animate);
-      const dt = clock.getDelta();
-      const time = clock.elapsedTime;
-
-      // Smooth scroll
-      scrollSmoothed += (scrollTarget - scrollSmoothed) * Math.min(1, dt * 5);
-      const t = scrollSmoothed;
-
-      let assembleP = 0;
-      let camPos = tmpVec;
-      const carWorldPos = car.position;
-
-      if (t < PH.assembleSnap) {
-        // Phase 1 — drifting parts gradually moving toward each other
-        const p = t / PH.assembleSnap;
-        assembleP = p * 0.88;
-        camPos.copy(camFront);
-        carWorldPos.set(0, 0, 0);
-      } else if (t < PH.assembleDone) {
-        // Phase 2 — final snap-in
-        const p = (t - PH.assembleSnap) / (PH.assembleDone - PH.assembleSnap);
-        assembleP = 0.88 + easeInOutCubic(p) * 0.12;
-        camPos.copy(camFront);
-        carWorldPos.set(0, 0, 0);
-      } else if (t < PH.obliqueDone) {
-        // Phase 3 — camera moves from front to oblique view
-        const p = (t - PH.assembleDone) / (PH.obliqueDone - PH.assembleDone);
-        assembleP = 1;
-        camPos.lerpVectors(camFront, camOblique, easeInOutCubic(p));
-        carWorldPos.set(0, 0, 0);
-      } else if (t < PH.behindDone) {
-        // Phase 4 — camera lerps from oblique to directly behind
-        const p = (t - PH.obliqueDone) / (PH.behindDone - PH.obliqueDone);
-        assembleP = 1;
-        camPos.lerpVectors(camOblique, camBehind, easeInOutCubic(p));
-        carWorldPos.set(0, 0, 0);
-      } else {
-        // Phase 5 — camera locked behind, car accelerates into depth
-        const p = clamp01((t - PH.behindDone) / (1 - PH.behindDone));
-        assembleP = 1;
-        camPos.copy(camBehind);
-        carWorldPos.set(0, 0, -easeInQuad(p) * 90);
-      }
-
-      updateParts(assembleP, time);
-
-      // Lights orbit around the car continuously (key + rim, opposite directions)
-      const keyA = time * KEY_ORBIT.speed;
-      dirLight.position.set(
-        carWorldPos.x + Math.cos(keyA) * KEY_ORBIT.radius,
-        carWorldPos.y + KEY_ORBIT.height,
-        carWorldPos.z + Math.sin(keyA) * KEY_ORBIT.radius
-      );
-      dirLight.target.position.copy(carWorldPos);
-      dirLight.target.updateMatrixWorld();
-
-      const rimA = time * RIM_ORBIT.speed + RIM_ORBIT.phase;
-      rim.position.set(
-        carWorldPos.x + Math.cos(rimA) * RIM_ORBIT.radius,
-        carWorldPos.y + RIM_ORBIT.height,
-        carWorldPos.z + Math.sin(rimA) * RIM_ORBIT.radius
-      );
-      rim.target.position.copy(carWorldPos);
-      rim.target.updateMatrixWorld();
-
-      camera.position.copy(camPos);
-      lookTarget.copy(carWorldPos);
-      lookTarget.y += 0.7;
-      camera.lookAt(lookTarget);
-
-      // Flash trigger — fires when we cross fully-assembled
-      const justAssembled = assembleP >= 0.985;
-      if (justAssembled && !prevAssembled) {
-        flashStart = time;
-      }
-      prevAssembled = justAssembled;
-
-      const sinceFlash = time - flashStart;
-      let flashOp = 0;
-      if (sinceFlash >= 0 && sinceFlash < 0.6) {
-        if (sinceFlash < 0.05) {
-          flashOp = sinceFlash / 0.05;
-        } else {
-          flashOp = Math.pow(1 - (sinceFlash - 0.05) / 0.55, 2.4);
-        }
-      }
-      flashEl.style.opacity = flashOp.toFixed(3);
-
-      // Hero priority: let the Z子 KV own the first viewport. The 3D scene
-      // fades in as the user starts scrolling so it stops competing with the
-      // hero portrait, and reaches full intensity by the time the car has
-      // begun assembling.
-      const canvasOp = clamp01((t - 0.02) / 0.18);
-      canvas.style.opacity = canvasOp.toFixed(3);
-
-      renderer.render(scene, camera);
-    }
-    animate();
   </script>
 
 </body>
