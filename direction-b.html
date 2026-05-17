@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>轟Z子 | TODOROKI ZETSUKO — Direction B</title>
-  <meta name="description" content="轟Z子（TODOROKI ZETSUKO）オフィシャルサイト。Direction B: Bold / Graphic.">
+  <title>轟Z子 | TODOROKI ZETSUKO — Direction B (Navigation)</title>
+  <meta name="description" content="轟Z子（TODOROKI ZETSUKO）— Direction B: navigation system that drives fans to where 轟Z子 is.">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;600;800;900&family=Zen+Kaku+Gothic+New:wght@300;500;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;600;800;900&family=Zen+Kaku+Gothic+New:wght@300;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap');
 
     *, *::before, *::after {
       margin: 0;
@@ -15,27 +15,27 @@
     }
 
     :root {
-      --bg: #f5f1e8;
-      --ink: #0a0a0a;
-      --red: #e8222a;
-      --yellow: #f3c100;
-      --blue: #1f4ed8;
-      --muted: #5a5a5a;
-      --rule: #0a0a0a;
+      --map-blue: #1f4ed8;
+      --map-blue-deep: #16319c;
+      --road-red: #ff2030;
+      --ink-on-map: #1a2f9a;
+      --hud-bg: #000000;
+      --hud-ink: #1f4ed8;
+      --user-bg: #000000;
       --display: 'Anton', 'Zen Kaku Gothic New', sans-serif;
       --jp: 'Zen Kaku Gothic New', sans-serif;
       --en: 'Inter', sans-serif;
+      --serif-jp: 'Noto Serif JP', serif;
     }
 
-    html { scroll-behavior: smooth; }
-
-    body {
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--map-blue);
+      color: var(--ink-on-map);
       font-family: var(--jp);
-      background: var(--bg);
-      color: var(--ink);
-      font-weight: 400;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
     }
 
     /* Variant ribbon */
@@ -45,649 +45,355 @@
       left: 0;
       right: 0;
       z-index: 200;
-      background: var(--ink);
-      color: var(--bg);
+      background: #ffffff;
+      color: var(--map-blue-deep);
       font-family: var(--en);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.3em;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       text-align: center;
       padding: 0.4rem 1rem;
+      font-weight: 700;
     }
     .variant-ribbon a {
-      color: var(--bg);
+      color: var(--map-blue-deep);
       opacity: 0.55;
       text-decoration: none;
-      margin: 0 0.6rem;
+      margin: 0 0.55rem;
       transition: opacity 0.3s;
+      font-weight: 500;
     }
     .variant-ribbon a:hover { opacity: 1; }
-    .variant-ribbon .current {
-      opacity: 1;
-      color: var(--yellow);
-    }
+    .variant-ribbon .current { opacity: 1; border-bottom: 1px solid var(--map-blue-deep); padding-bottom: 1px; }
 
-    /* Top bar */
-    .topbar {
-      position: fixed;
-      top: 28px;
+    /* Stage — the whole "navigation screen". */
+    .stage {
+      position: relative;
       width: 100%;
-      z-index: 100;
-      padding: 1.2rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 2px solid var(--ink);
-      background: var(--bg);
-    }
-
-    .topbar .brand {
-      font-family: var(--display);
-      font-size: 1.4rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .topbar .brand .accent { color: var(--red); }
-
-    .topbar nav {
-      display: flex;
-      gap: 1.6rem;
-    }
-
-    .topbar nav a {
-      font-family: var(--en);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink);
-      text-decoration: none;
-      padding: 0.3rem 0.6rem;
-      border: 1.5px solid transparent;
-      transition: all 0.2s;
-    }
-
-    .topbar nav a:hover {
-      border-color: var(--ink);
-      background: var(--yellow);
-    }
-
-    /* Hero — bold & overlapping */
-    .hero {
-      position: relative;
-      padding: 7rem 0 4rem;
-      border-bottom: 2px solid var(--ink);
+      height: 100vh;
       overflow: hidden;
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      position: relative;
-    }
-
-    .hero-text {
-      padding: 4rem 3rem 4rem 3rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-eyebrow {
-      display: inline-block;
-      background: var(--ink);
-      color: var(--yellow);
-      font-family: var(--en);
-      font-size: 0.7rem;
-      font-weight: 800;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      padding: 0.4rem 0.9rem;
-      margin-bottom: 2rem;
-    }
-
-    .hero h1 {
-      font-family: var(--display);
-      font-size: clamp(5rem, 14vw, 13rem);
-      line-height: 0.9;
-      letter-spacing: -0.01em;
-      text-transform: uppercase;
-    }
-
-    .hero h1 .red { color: var(--red); }
-    .hero h1 .stroke {
-      -webkit-text-stroke: 2px var(--ink);
-      color: transparent;
-    }
-
-    .hero-sub {
-      font-family: var(--display);
-      font-size: clamp(2rem, 5vw, 4rem);
-      letter-spacing: 0.04em;
-      margin-top: 0.4rem;
-      line-height: 1;
-    }
-
-    .hero-tagline {
-      font-family: var(--jp);
-      font-weight: 500;
-      font-size: 1rem;
-      line-height: 1.7;
-      margin-top: 2.4rem;
-      max-width: 28em;
-      padding-left: 1.4rem;
-      border-left: 4px solid var(--red);
-    }
-
-    .hero-image {
-      position: relative;
-      min-height: 540px;
-      background: var(--ink);
-      overflow: hidden;
-    }
-
-    .hero-image img {
+    /* Map background — tiled and slowly panning so the nav feels alive.
+       The source PNG is large (~8MB) so we keep one copy and repeat it. */
+    .map-bg {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      mix-blend-mode: normal;
+      background-image: url('images/dir-b-map.png');
+      background-repeat: repeat;
+      background-size: auto;
+      background-position: 0 0;
+      will-change: background-position;
+      animation: mapPan 80s linear infinite;
+      z-index: 0;
     }
 
-    .hero-stamp {
+    @keyframes mapPan {
+      from { background-position: 0 0; }
+      to   { background-position: -1932px -1080px; }
+    }
+
+    /* Soft vignette so HUD/bubbles stay legible without obscuring the map */
+    .map-bg::after {
+      content: '';
       position: absolute;
-      bottom: 2rem;
-      right: 2rem;
-      background: var(--yellow);
-      color: var(--ink);
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(20, 30, 130, 0.0) 0%, rgba(20, 30, 130, 0.25) 75%, rgba(8, 14, 70, 0.45) 100%);
+      pointer-events: none;
+    }
+
+    /* HUD: top-left logo block */
+    .hud-logo {
+      position: absolute;
+      top: 1.4rem;
+      left: 1.4rem;
+      z-index: 20;
+      font-family: var(--serif-jp);
+      color: #ffffff;
+      line-height: 1.1;
+      mix-blend-mode: screen;
+    }
+    .hud-logo .en {
       font-family: var(--en);
-      font-size: 0.7rem;
-      font-weight: 800;
-      letter-spacing: 0.25em;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      padding: 0.6rem 1rem;
-      transform: rotate(-3deg);
-      z-index: 3;
-      border: 2px solid var(--ink);
-    }
-
-    /* Marquee strip */
-    .marquee {
-      background: var(--red);
-      color: var(--bg);
-      font-family: var(--display);
-      font-size: 1.6rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.8rem 0;
-      white-space: nowrap;
-      overflow: hidden;
-      border-bottom: 2px solid var(--ink);
-    }
-    .marquee-track {
-      display: inline-block;
-      animation: marquee 40s linear infinite;
-    }
-    .marquee span { padding: 0 1.5rem; }
-    .marquee .dot { color: var(--yellow); }
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
-    /* Sections */
-    section.block {
-      padding: 5rem 3rem;
-      border-bottom: 2px solid var(--ink);
-    }
-
-    .block-head {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 1.5rem;
-      align-items: end;
-      margin-bottom: 3rem;
-    }
-
-    .block-head .num {
-      font-family: var(--en);
-      font-size: 0.8rem;
-      font-weight: 800;
-      letter-spacing: 0.3em;
-      color: var(--blue);
-    }
-
-    .block-head h2 {
-      font-family: var(--display);
-      font-size: clamp(2.6rem, 6vw, 5rem);
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      line-height: 0.95;
-    }
-
-    .block-head h2 .ja {
-      font-family: var(--jp);
-      font-weight: 900;
-      font-size: 0.5em;
-      margin-left: 0.6em;
-      vertical-align: middle;
-      color: var(--muted);
-    }
-
-    /* Profile */
-    .profile-row {
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: 4rem;
-    }
-
-    .profile-row .icon-frame {
-      border: 4px solid var(--ink);
-      padding: 8px;
-      background: var(--yellow);
-      transform: rotate(-1deg);
-      align-self: start;
-    }
-
-    .profile-row .icon-frame img {
-      width: 100%;
+      font-weight: 500;
       display: block;
+      margin-bottom: 0.3rem;
+      opacity: 0.85;
     }
-
-    .profile-row .text {
-      font-size: 1rem;
-      line-height: 1.9;
-      max-width: 38em;
-    }
-
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 2rem;
-    }
-
-    .tag {
-      font-family: var(--en);
-      font-size: 0.74rem;
+    .hud-logo .jp {
+      font-family: var(--serif-jp);
+      font-size: clamp(1.5rem, 2.6vw, 2.3rem);
       font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 0.4rem 0.8rem;
-      border: 2px solid var(--ink);
+      letter-spacing: 0.08em;
     }
 
-    .tag.fill-red { background: var(--red); color: var(--bg); border-color: var(--red); }
-    .tag.fill-blue { background: var(--blue); color: var(--bg); border-color: var(--blue); }
-    .tag.fill-yellow { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
-
-    /* Exhibition */
-    .ex-list {
-      list-style: none;
-      border-top: 2px solid var(--ink);
+    /* HUD: top-right date / arrow block */
+    .hud-date {
+      position: absolute;
+      top: 1.4rem;
+      right: 1.4rem;
+      z-index: 20;
+      background: var(--hud-bg);
+      padding: 0.7rem 1.2rem;
+      border-radius: 3px;
+      max-width: 280px;
+    }
+    .hud-date img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 240px;
     }
 
-    .ex-list li {
-      display: grid;
-      grid-template-columns: 130px 1fr auto;
-      gap: 2rem;
-      align-items: center;
-      padding: 1.4rem 0;
-      border-bottom: 2px solid var(--ink);
+    /* Live-venue pin near map center */
+    .pin {
+      position: absolute;
+      top: 28%;
+      left: 48%;
+      transform: translate(-50%, -100%);
+      width: 56px;
+      height: auto;
+      z-index: 10;
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.4));
+      animation: pinDrop 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s both,
+                 pinBob   3.0s ease-in-out infinite 1.5s;
     }
 
-    .ex-list .yr {
-      font-family: var(--display);
-      font-size: clamp(2rem, 4vw, 3.4rem);
-      line-height: 1;
-      color: var(--red);
+    @keyframes pinDrop {
+      from { transform: translate(-50%, -240%); opacity: 0; }
+      to   { transform: translate(-50%, -100%); opacity: 1; }
+    }
+    @keyframes pinBob {
+      0%, 100% { transform: translate(-50%, -100%); }
+      50%      { transform: translate(-50%, -108%); }
     }
 
-    .ex-list .nm {
+    /* Pin caption above the pin */
+    .pin-caption {
+      position: absolute;
+      top: calc(28% - 70px);
+      left: 48%;
+      transform: translate(-50%, 0);
+      z-index: 11;
       font-family: var(--jp);
-      font-weight: 700;
-      font-size: clamp(1rem, 1.6vw, 1.3rem);
+      font-size: 0.9rem;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.45);
+      padding: 0.25rem 0.7rem;
+      border-radius: 2px;
+      white-space: nowrap;
+      pointer-events: none;
     }
 
-    .ex-list .vn {
+    /* Z子 user-marker (small dot near the bottom of the map) */
+    .z-marker {
+      position: absolute;
+      top: 60%;
+      left: 60%;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 30%, #ffffff 0%, #ffd8dc 22%, var(--road-red) 60%, #800810 100%);
+      border: 3px solid #ffffff;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45),
+                  0 0 0 6px rgba(255, 255, 255, 0.18);
+      z-index: 12;
+    }
+    .z-marker::after {
+      content: '';
+      position: absolute;
+      inset: -10px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      animation: zPulse 2.2s ease-out infinite;
+    }
+    @keyframes zPulse {
+      0%   { transform: scale(0.6); opacity: 0.9; }
+      100% { transform: scale(1.9); opacity: 0;   }
+    }
+
+    /* Z子 narration bubbles — placeholder image set from the AD */
+    .bubbles-zetsuko {
+      position: absolute;
+      top: 18%;
+      left: 4%;
+      z-index: 15;
+      width: clamp(220px, 22vw, 360px);
+      height: auto;
+      filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.25));
+    }
+
+    /* User's reply bubble — black with a tail */
+    .bubble-user {
+      position: absolute;
+      top: 46%;
+      right: 6%;
+      z-index: 15;
+      width: clamp(120px, 12vw, 180px);
+      height: auto;
+      cursor: pointer;
+      filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.5));
+      transition: transform 0.2s ease;
+    }
+    .bubble-user:hover { transform: translateY(-2px) scale(1.03); }
+
+    /* Lower-left distance scale (placeholder, redraw later) */
+    .map-scale {
+      position: absolute;
+      left: 1.4rem;
+      bottom: 1.4rem;
+      z-index: 20;
       font-family: var(--en);
-      font-size: 0.8rem;
-      font-weight: 600;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      display: flex;
+      align-items: flex-end;
+      gap: 0;
+      mix-blend-mode: screen;
+    }
+    .map-scale .seg {
+      width: 22px;
+      height: 4px;
+      background: #ffffff;
+      margin-right: 1px;
+      position: relative;
+    }
+    .map-scale .seg::before {
+      content: attr(data-d);
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      margin-bottom: 0.2rem;
+      font-size: 0.55rem;
+    }
+
+    /* Lower-right compass (placeholder triangle, redraw later) */
+    .map-compass {
+      position: absolute;
+      right: 1.4rem;
+      bottom: 1.4rem;
+      z-index: 20;
+      width: 40px;
+      height: 40px;
+      color: #ffffff;
+      mix-blend-mode: screen;
+      opacity: 0.8;
+    }
+    .map-compass svg { width: 100%; height: 100%; }
+
+    /* WIP banner */
+    .wip-banner {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 150;
+      background: #ffffff;
+      color: var(--map-blue-deep);
+      font-family: var(--en);
+      font-size: 0.55rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    /* Photo strip */
-    .photo-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      border-top: 2px solid var(--ink);
-      border-bottom: 2px solid var(--ink);
-    }
-
-    .photo-strip img {
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
-      display: block;
-      border-right: 2px solid var(--ink);
-    }
-
-    .photo-strip img:last-child { border-right: 0; }
-
-    /* Links */
-    .link-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      border-top: 2px solid var(--ink);
-      border-left: 2px solid var(--ink);
-    }
-
-    .link-grid a {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 1.6rem 1.4rem;
-      min-height: 140px;
-      border-right: 2px solid var(--ink);
-      border-bottom: 2px solid var(--ink);
-      background: var(--bg);
-      text-decoration: none;
-      color: var(--ink);
-      transition: all 0.2s;
-    }
-
-    .link-grid a:hover {
-      background: var(--ink);
-      color: var(--bg);
-    }
-
-    .link-grid a:hover .lk-arrow { color: var(--yellow); }
-
-    .link-grid .lk-label {
-      font-family: var(--en);
-      font-size: 0.7rem;
-      font-weight: 800;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .link-grid a:hover .lk-label { color: var(--yellow); }
-
-    .link-grid .lk-name {
-      font-family: var(--display);
-      font-size: 1.6rem;
-      letter-spacing: 0.02em;
-      margin-top: 0.6rem;
-    }
-
-    .link-grid .lk-arrow {
-      align-self: flex-end;
-      font-family: var(--en);
-      font-weight: 800;
-      font-size: 1.1rem;
-      transition: color 0.2s;
-    }
-
-    /* Contact */
-    .contact-row {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 3rem;
-      align-items: center;
-    }
-
-    .contact-row .pitch {
-      font-family: var(--display);
-      font-size: clamp(2rem, 4vw, 3.6rem);
-      line-height: 1.1;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }
-
-    .contact-row .pitch .ja {
-      display: block;
-      font-family: var(--jp);
+      padding: 0.35rem 0.9rem;
+      border-radius: 2px;
       font-weight: 700;
-      font-size: 0.4em;
-      letter-spacing: 0.05em;
-      text-transform: none;
-      color: var(--muted);
-      margin-top: 0.6rem;
-    }
-
-    .contact-row .cta {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 1.4rem 1.8rem;
-      background: var(--ink);
-      color: var(--yellow);
-      text-decoration: none;
-      border: 2px solid var(--ink);
-      transition: all 0.2s;
-    }
-
-    .contact-row .cta:hover {
-      background: var(--yellow);
-      color: var(--ink);
-    }
-
-    .contact-row .cta .lbl {
-      font-family: var(--en);
-      font-size: 0.7rem;
-      font-weight: 800;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      opacity: 0.7;
-    }
-
-    .contact-row .cta .url {
-      font-family: var(--display);
-      font-size: 1.6rem;
-      margin-top: 0.4rem;
-    }
-
-    footer {
-      padding: 2rem 3rem;
-      display: flex;
-      justify-content: space-between;
-      font-family: var(--en);
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
     }
 
     @media (max-width: 768px) {
-      .topbar { padding: 0.8rem 1rem; }
-      .topbar nav { gap: 0.6rem; }
-      .topbar nav a { padding: 0.2rem 0.4rem; font-size: 0.65rem; }
-      .hero-grid { grid-template-columns: 1fr; }
-      .hero-text { padding: 2rem 1.5rem; }
-      .hero-image { min-height: 380px; }
-      section.block { padding: 3rem 1.5rem; }
-      .profile-row { grid-template-columns: 1fr; }
-      .ex-list li { grid-template-columns: 70px 1fr; }
-      .ex-list .vn { grid-column: 1 / -1; }
-      .photo-strip { grid-template-columns: repeat(2, 1fr); }
-      .photo-strip img:nth-child(2) { border-right: 0; }
-      .link-grid { grid-template-columns: 1fr 1fr; }
-      .contact-row { grid-template-columns: 1fr; }
+      .hud-logo { top: 2.4rem; left: 1rem; }
+      .hud-logo .jp { font-size: 1.4rem; }
+      .hud-date { top: 2.4rem; right: 1rem; padding: 0.5rem 0.8rem; max-width: 180px; }
+      .hud-date img { max-width: 160px; }
+
+      .pin { width: 40px; top: 32%; left: 50%; }
+      .pin-caption { top: calc(32% - 56px); left: 50%; font-size: 0.78rem; }
+
+      .z-marker { top: 64%; left: 56%; width: 28px; height: 28px; }
+
+      .bubbles-zetsuko { top: 14%; left: 3%; width: 56vw; max-width: 280px; }
+      .bubble-user { top: 50%; right: 4%; width: 30vw; max-width: 140px; }
+
+      .map-scale { left: 1rem; bottom: 1rem; }
+      .map-compass { right: 1rem; bottom: 1rem; width: 30px; height: 30px; }
+
+      .wip-banner { bottom: 8px; font-size: 0.5rem; }
+
+      @keyframes mapPan {
+        from { background-position: 0 0; }
+        to   { background-position: -1200px -700px; }
+      }
     }
   </style>
 </head>
 <body>
 
   <div class="variant-ribbon">
-    <a href="direction-a.html">A ←</a>
-    <span class="current">Direction B — Bold / Graphic</span>
+    <span class="current">Direction B — Navigation System (WIP)</span>
+    <a href="direction-a2-3d.html">→ A2</a>
+    <a href="direction-a-3d.html">→ A 3D</a>
+    <a href="direction-a.html">→ A static</a>
     <a href="index.html">→ V0</a>
   </div>
 
-  <div class="topbar">
-    <div class="brand">轟<span class="accent">Z</span>子 / Todoroki Zetsuko</div>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#works">Works</a>
-      <a href="#links">Links</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </div>
+  <div class="stage">
+    <div class="map-bg" aria-hidden="true"></div>
 
-  <section class="hero">
-    <div class="hero-grid">
-      <div class="hero-text">
-        <span class="hero-eyebrow">New Project / 2026 —</span>
-        <h1><span class="stroke">Todoroki</span><br><span class="red">Zetsuko</span></h1>
-        <div class="hero-sub">轟<span style="color:var(--red)">Z</span>子</div>
-        <p class="hero-tagline">アイドル × ノイズ × インタラクティブ。<br>従来のアイドル像を拡張し、新たなフィールドへ接続する。</p>
-      </div>
-      <div class="hero-image">
-        <img src="images/photo-portrait.jpg" alt="轟Z子">
-        <div class="hero-stamp">Now Launching</div>
-      </div>
+    <div class="hud-logo">
+      <span class="en">Todoroki Zetsuko · Official Site</span>
+      <span class="jp">轟乙子</span>
     </div>
-  </section>
 
-  <div class="marquee">
-    <div class="marquee-track">
-      <span>SAKA-SAMA</span><span class="dot">●</span>
-      <span>惑星通信社</span><span class="dot">●</span>
-      <span>NOISE</span><span class="dot">●</span>
-      <span>MAX/MSP</span><span class="dot">●</span>
-      <span>東京藝術大学</span><span class="dot">●</span>
-      <span>SAKA-SAMA</span><span class="dot">●</span>
-      <span>惑星通信社</span><span class="dot">●</span>
-      <span>NOISE</span><span class="dot">●</span>
-      <span>MAX/MSP</span><span class="dot">●</span>
-      <span>東京藝術大学</span><span class="dot">●</span>
+    <div class="hud-date" aria-label="Next live: 5/17 (Sun)">
+      <img src="images/dir-b-hud-date.png" alt="次のライブまで 5/17 (日) →">
+    </div>
+
+    <div class="pin-caption">次のライブはココ！↓</div>
+    <img class="pin" src="images/dir-b-pin.png" alt="ライブ会場マーカー">
+
+    <div class="z-marker" aria-label="現在地: 轟Z子" title="現在地"></div>
+
+    <img class="bubbles-zetsuko" src="images/dir-b-bubble-zetsuko.png" alt="Z子からのナビゲーション: 次のライブは5月17日(日)だよ! 渋谷方面に〇〇km !! 料金は2000円です♡">
+
+    <img class="bubble-user" src="images/dir-b-bubble-user.png" alt="ユーザー: いくら?" tabindex="0" role="button">
+
+    <div class="map-scale" aria-hidden="true">
+      <span class="seg" data-d="1,000"></span>
+      <span class="seg" data-d="500"></span>
+      <span class="seg" data-d="100"></span>
+    </div>
+
+    <div class="map-compass" aria-hidden="true">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6">
+        <circle cx="20" cy="20" r="14" />
+        <path d="M20 8 L24 22 L20 18 L16 22 Z" fill="currentColor" stroke="none"/>
+        <text x="20" y="35" text-anchor="middle" font-family="Inter, sans-serif" font-size="6" fill="currentColor" stroke="none">N</text>
+      </svg>
     </div>
   </div>
 
-  <section id="about" class="block">
-    <div class="block-head">
-      <span class="num">01 / ABOUT</span>
-      <h2>Who is Z?<span class="ja">轟Z子とは</span></h2>
-    </div>
-    <div class="profile-row">
-      <div class="icon-frame">
-        <img src="images/icon-red.jpg" alt="轟Z子">
-      </div>
-      <div class="text">
-        <p>東京藝術大学大学院映像研究科在籍。アイドルグループ <strong>SAKA-SAMA</strong>、<strong>惑星通信社</strong> のメンバーとして活動するほか、Maxを用いたノイズライブやインタラクティブな音楽表現を行う。</p>
-        <p style="margin-top: 1.2rem;">従来のアイドル像を拡張し、新たなフィールドと接続する独自の表現を展開している。</p>
-        <div class="tag-row">
-          <span class="tag fill-red">Idol</span>
-          <span class="tag fill-blue">Noise</span>
-          <span class="tag fill-yellow">Interactive</span>
-          <span class="tag">Max/MSP</span>
-          <span class="tag">Performance</span>
-          <span class="tag">Video</span>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="wip-banner">B · Navigation WIP</div>
 
-  <section id="works" class="block">
-    <div class="block-head">
-      <span class="num">02 / WORKS</span>
-      <h2>Selected<span class="ja">展示・出演</span></h2>
-    </div>
-    <ul class="ex-list">
-      <li>
-        <span class="yr">2025</span>
-        <span class="nm">NEW PLATFORM — Alternative ASIA</span>
-        <span class="vn">Yokohama</span>
-      </li>
-      <li>
-        <span class="yr">2025</span>
-        <span class="nm">アイドルと芸術 8</span>
-        <span class="vn">mograg gallery</span>
-      </li>
-      <li>
-        <span class="yr">2024</span>
-        <span class="nm">アイドルと芸術 7</span>
-        <span class="vn">mograg gallery</span>
-      </li>
-    </ul>
-  </section>
-
-  <div class="photo-strip">
-    <img src="images/photo-jump.jpg" alt="">
-    <img src="images/photo-pose.jpg" alt="">
-    <img src="images/photo-closeup.jpg" alt="">
-    <img src="images/photo-lying.jpg" alt="">
-  </div>
-
-  <section id="links" class="block">
-    <div class="block-head">
-      <span class="num">03 / LINKS</span>
-      <h2>Channels<span class="ja">SNS・関連リンク</span></h2>
-    </div>
-    <div class="link-grid">
-      <a href="https://x.com/ZetsukoJP_tur" target="_blank" rel="noopener">
-        <div class="lk-label">X / Twitter</div>
-        <div class="lk-name">@ZetsukoJP_tur</div>
-        <div class="lk-arrow">→</div>
-      </a>
-      <a href="https://www.instagram.com/ZetsukoJP_tur" target="_blank" rel="noopener">
-        <div class="lk-label">Instagram</div>
-        <div class="lk-name">@ZetsukoJP_tur</div>
-        <div class="lk-arrow">→</div>
-      </a>
-      <a href="https://www.tiktok.com/@ZetsukoJP_tur" target="_blank" rel="noopener">
-        <div class="lk-label">TikTok</div>
-        <div class="lk-name">@ZetsukoJP_tur</div>
-        <div class="lk-arrow">→</div>
-      </a>
-      <a href="https://www.youtube.com/@轟Z子" target="_blank" rel="noopener">
-        <div class="lk-label">YouTube</div>
-        <div class="lk-name">轟Z子</div>
-        <div class="lk-arrow">→</div>
-      </a>
-      <a href="https://www.trash-up.com/sakasama/" target="_blank" rel="noopener">
-        <div class="lk-label">Group</div>
-        <div class="lk-name">SAKA-SAMA</div>
-        <div class="lk-arrow">→</div>
-      </a>
-      <a href="https://www.trash-up.com/artist/%E6%83%91%E6%98%9F%E9%80%9A%E4%BF%A1%E7%A4%BE" target="_blank" rel="noopener">
-        <div class="lk-label">Group</div>
-        <div class="lk-name">惑星通信社</div>
-        <div class="lk-arrow">→</div>
-      </a>
-    </div>
-  </section>
-
-  <section id="contact" class="block">
-    <div class="block-head">
-      <span class="num">04 / CONTACT</span>
-      <h2>Get In Touch<span class="ja">お問い合わせ</span></h2>
-    </div>
-    <div class="contact-row">
-      <div class="pitch">
-        Let's<br>
-        <span style="color:var(--red)">Make</span> Noise<span class="ja">お仕事のご依頼・コラボのお問い合わせを受け付けています。</span>
-      </div>
-      <a class="cta" href="https://zetsukojapan.com/" target="_blank" rel="noopener">
-        <span class="lbl">Inquiry →</span>
-        <span class="url">zetsukojapan.com</span>
-      </a>
-    </div>
-  </section>
-
-  <footer>
-    <span>© 2025 Todoroki Zetsuko</span>
-    <span>Direction B</span>
-  </footer>
+  <script>
+    // Stub for future interactivity: when the user clicks the "いくら?" bubble,
+    // a Z子 narration line is queued. The real implementation will hook into
+    // an AI / remote-control backend; for now it's a no-op placeholder.
+    const userBubble = document.querySelector('.bubble-user');
+    if (userBubble) {
+      userBubble.addEventListener('click', () => {
+        userBubble.animate(
+          [{ transform: 'scale(1)' }, { transform: 'scale(0.94)' }, { transform: 'scale(1)' }],
+          { duration: 220, easing: 'ease-out' }
+        );
+        // TODO: trigger Z子 reply pipeline (remote prompt / AI fallback).
+      });
+    }
+  </script>
 
 </body>
 </html>
