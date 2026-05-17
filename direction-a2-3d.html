@@ -282,43 +282,6 @@
               drop-shadow(0 0 14px rgba(255, 32, 48, 0.2));
     }
 
-    /* Part badge — caption line under the thumbnail naming the body↔car parts. */
-    .part-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 1.6rem;
-      padding: 0.35rem 0.85rem;
-      border: 1px solid var(--color-rule);
-      border-radius: 999px;
-      background:
-        linear-gradient(135deg,
-          rgba(240, 232, 238, 0.06) 0%,
-          rgba(240, 232, 238, 0.02) 50%,
-          rgba(255, 32, 48, 0.05) 100%);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-    }
-    .part-badge .label-en {
-      font-family: var(--font-display-en);
-      font-size: 0.62rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-chrome);
-    }
-    .part-badge .label-jp {
-      font-family: var(--font-body);
-      font-size: 0.72rem;
-      color: var(--color-muted);
-      letter-spacing: 0.04em;
-    }
-    .part-badge .equiv-mark {
-      color: var(--color-accent);
-      font-family: var(--font-display-en);
-      font-size: 0.62rem;
-      margin: 0 0.1em;
-    }
-
     /* Statement */
     .statement p {
       font-size: clamp(1rem, 1.3vw, 1.15rem);
@@ -513,9 +476,6 @@
       .section-marker h2 { font-size: clamp(1.3rem, 6vw, 1.8rem); }
 
       .part-thumb { width: 56vw; max-width: 220px; margin-bottom: 0.8rem; }
-      .part-badge { margin-bottom: 1.2rem; }
-      .part-badge .label-en { font-size: 0.55rem; }
-      .part-badge .label-jp { font-size: 0.68rem; }
 
       .statement p { font-size: 0.95rem; line-height: 1.85; }
 
@@ -576,11 +536,6 @@
           <span class="num">— 01</span>
           <h2>Statement</h2>
         </div>
-        <div class="part-badge">
-          <span class="label-en">Right Twintail</span>
-          <span class="equiv-mark">≒</span>
-          <span class="label-jp">ツインテール（右）</span>
-        </div>
         <div class="statement">
           <p>アイドルとして人前に立つこと、ノイズを鳴らすこと、Maxで音と映像を制御すること。それぞれは別々の言語のようでいて、私の中ではひとつの問いとしてつながっている。</p>
           <p>従来のアイドル像を拡張し、新しいフィールドへ接続する——その実験を、ステージでも、画面の中でも続けている。</p>
@@ -594,11 +549,6 @@
         <div class="section-marker">
           <span class="num">— 02</span>
           <h2>Profile</h2>
-        </div>
-        <div class="part-badge">
-          <span class="label-en">Left Eye</span>
-          <span class="equiv-mark">≒</span>
-          <span class="label-jp">左目</span>
         </div>
         <dl>
           <dt>Name</dt>
@@ -621,11 +571,6 @@
         <div class="section-marker">
           <span class="num">— 03</span>
           <h2>Selected Exhibitions</h2>
-        </div>
-        <div class="part-badge">
-          <span class="label-en">Wheel</span>
-          <span class="equiv-mark">≒</span>
-          <span class="label-jp">ホイール（歩んできた道）</span>
         </div>
         <ul class="exhibition-list">
           <li>
@@ -655,15 +600,10 @@
 
     <section id="channels" class="scroll-section align-left">
       <div class="section-content">
-        <img class="part-thumb" src="images/part-05.png" alt="Door mirror ≒ ear — placeholder">
+        <img class="part-thumb" src="images/part-05.png" alt="Door — car part placeholder">
         <div class="section-marker">
           <span class="num">— 04</span>
           <h2>Channels</h2>
-        </div>
-        <div class="part-badge">
-          <span class="label-en">Door Mirror</span>
-          <span class="equiv-mark">≒</span>
-          <span class="label-jp">ドアミラー（耳）</span>
         </div>
         <ul class="links-list">
           <li><a href="https://x.com/ZetsukoJP_tur" target="_blank" rel="noopener">
@@ -684,15 +624,10 @@
 
     <section id="contact" class="scroll-section align-center">
       <div class="section-content">
-        <img class="part-thumb" src="images/part-07.png" alt="Muffler ≒ horn / outward signal — placeholder">
+        <img class="part-thumb" src="images/part-07.png" alt="Muffler — car part placeholder">
         <div class="section-marker">
           <span class="num">— 05</span>
           <h2>Contact</h2>
-        </div>
-        <div class="part-badge">
-          <span class="label-en">Muffler</span>
-          <span class="equiv-mark">≒</span>
-          <span class="label-jp">マフラー（外への発信・"轟"）</span>
         </div>
         <div class="contact-block">
           <p>For inquiries and bookings, please reach out via <a href="https://zetsukojapan.com/">zetsukojapan.com</a>.</p>
